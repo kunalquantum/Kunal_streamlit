@@ -14,6 +14,13 @@ from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 import joblib
 import shap
+# Header Section
+col1, col2, col3 = st.columns(3)
+with col2:
+    st.subheader('Ensemble Modelling')
+with col2:
+    st.image("assets/ensemble.jpeg", width=250)
+    st.caption("We visualize, predict, and test")
 
 # Title of the app
 st.title("Advanced Ensemble Learning with Customization and Visualization")
