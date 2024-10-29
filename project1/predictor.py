@@ -15,7 +15,7 @@ import joblib
 
 # Header Section
 col1, col2, col3 = st.columns(3)
-with col2:
+with col1:
     st.subheader('Model Trainer')
 with col2:
     st.image("assets/automated.jpeg", width=250)
