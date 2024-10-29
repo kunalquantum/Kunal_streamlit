@@ -7,6 +7,7 @@ import seaborn as sns
 
 # Set the title and description of your app
 st.title("Advanced Data Cleaning App")
+col1, col2, col3 = st.columns(3)
 with col1:
     st.write('')
 with col2:
