@@ -11,9 +11,7 @@ with colb:
 # Contact Information Section  
     st.header("Contact Information")  
     st.write("**Name:** Kunal Lalbahadur Sharma")  # Replace with your actual name  
-    st.write("""**Email:** kunal.lalbahdur.s
-harma05@gmail.
-com""")  # Replace with your email  
+    st.write("""**Email:** kunal.lalbahdur.sharma05@gmail.com""")  # Replace with your email  
     st.write("**Phone:** 9892768818")  # Replace with your phone number  
     st.write("**LinkedIn:** [Kunal LinkedIn Profile](https://www.linkedin.com/in/kunal-sharma-601812247/)")  # Replace with your LinkedIn URL  
     st.write("**Github:** [Kunal Github Profile](https://github.com/kunalquantum)")
