@@ -96,9 +96,10 @@ st.markdown(
     .footer {
         position: fixed;
         bottom: 0;
+        margin-right:250px;
         width: 100%;
         text-align: center;
-        font-size: small;
+        font-size: large;
         color: gray;
     }
     </style>
