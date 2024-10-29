@@ -10,11 +10,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 import time
 
 # Set Streamlit page configuration
-st.set_page_config(
-    page_title="Multivariate Model Training and Evaluation",
-    page_icon="✅",
-    layout="wide",
-)
+
 
 # Streamlit app title and description
 st.title("Multivariate Model Training and Evaluation")

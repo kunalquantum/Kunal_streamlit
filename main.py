@@ -10,6 +10,37 @@ about_page=st.Page(
 
 )
 
+
+clustering=st.Page(
+    #linking of the page 
+    page="project1/clustering.py",
+    title="Clutering",
+    icon=":material/thumb_up:",
+
+)
+multivariate=st.Page(
+    #linking of the page 
+    page="project1/multivariate.py",
+    title="Multivariate",
+    icon=":material/thumb_up:",
+
+)
+cleaner=st.Page(
+    #linking of the page 
+    page="project1/cleaner.py",
+    title="cleaner",
+    icon=":material/thumb_up:",
+
+)
+
+ensemble=st.Page(
+    #linking of the page 
+    page="project1/ensemble.py",
+    title="ensemble",
+    icon=":material/thumb_up:",
+
+)
+
 project1_page=st.Page(
     #linking of the page 
     page="views/SmartDataHub.py",
@@ -45,7 +76,7 @@ project2_page=st.Page(
 pg=st.navigation(
    {
        "Info":[about_page],
-       "Smart Data Hub":[project1_page,predictor],
+       "Smart Data Hub":[project1_page,predictor,ensemble,cleaner,clustering,multivariate],
        
    }
     )
