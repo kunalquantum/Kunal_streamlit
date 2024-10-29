@@ -15,7 +15,7 @@ with col1:
 with col2:
     st.subheader('Multivariate')
     st.image("assets/multivariate.jpeg", width=250)
-    st.write('Compare the models mixing')
+    st.write('Complex Data Modelling')
 with col3:
     st.write('')
     
