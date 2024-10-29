@@ -61,23 +61,22 @@ predictor=st.Page(
 
 )
 
-project2_page=st.Page(
+Timeseries=st.Page(
     #linking of the page 
-    page="views/project2.py",
-    title="Project 2",
+    page="project1/TimeSeries.py",
+    title="TimeSeries",
     icon=":material/thumb_up:",
-    
+
+
 
 )
-
 
 # navigation bar 
 
 pg=st.navigation(
    {
        "Info":[about_page],
-       "Smart Data Hub":[project1_page,predictor,ensemble,cleaner,clustering,multivariate],
-       
+       "Smart Data Hub":[project1_page,predictor,ensemble,cleaner,clustering,multivariate]
    }
     )
 

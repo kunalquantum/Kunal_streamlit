@@ -1,163 +1,125 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.svm import SVC, SVR
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score, r2_score
 from sklearn.preprocessing import LabelEncoder
 import joblib
 
+# Header Section
 col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.write(' ')
-
 with col2:
-    st.subheader('Modal Trainer')
-
-with col3:
-    st.write(' ')
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.write(' ')
-
+    st.subheader('Model Trainer')
 with col2:
-    st.image("assets/automated.jpeg",width=250)
-  
+    st.image("assets/automated.jpeg", width=250)
     st.caption("We visualize, predict, and test")
-
-with col3:
-    st.write(' ')
-  
-
 
 # File upload
 uploaded_file = st.file_uploader("Upload your dataset (CSV file)", type=["csv"])
-if uploaded_file is not None:
-    st.spinner()
-    data = pd.read_csv(uploaded_file)
 
-    # Show dataset preview
+if uploaded_file is not None:
+    data = pd.read_csv(uploaded_file)
     st.header("Dataset Preview")
     st.write(data.head())
 
-    # Choose the target column
-    target_column = st.multiselect("Select the target column", data.columns)
-    
-    # Choose the dependent variable
-    dependent_column = st.multiselect("Select the dependent column", data.columns)
+    # Choose target and dependent columns
+    target_column = st.selectbox("Select the target column", data.columns)
+    dependent_column = st.selectbox("Select the dependent column", data.columns)
 
     if target_column and dependent_column:
-        # Data Preprocessing
         st.header("Data Preprocessing")
-        st.write("Performing data preprocessing...")
-        st.progress(0)
-
-        # Separate categorical and numerical columns
         categorical_columns = data.select_dtypes(include=['object']).columns
-
-        # Apply label encoding to categorical columns
-        label_encoder = LabelEncoder()
-        for col in categorical_columns:
-            data[col] = label_encoder.fit_transform(data[col])
-
-        # Fill missing values with dummy values (you can customize this)
+        data = pd.get_dummies(data, columns=categorical_columns)
         data.fillna(0, inplace=True)
-
-        # Drop unwanted columns
         unwanted_columns = st.multiselect("Select columns to drop", data.columns)
         data.drop(unwanted_columns, axis=1, inplace=True)
 
-        # Save the preprocessed dataset
         preprocessed_data_file = "preprocessed_data.csv"
         data.to_csv(preprocessed_data_file, index=False)
         st.write(f"Preprocessed data saved to {preprocessed_data_file}")
-
-        # Add download button for preprocessed data
-        st.markdown(f"Download the Preprocessed Data: [preprocessed_data.csv](./{preprocessed_data_file})")
+        st.markdown(f"Download Preprocessed Data: [preprocessed_data.csv](./{preprocessed_data_file})")
 
         # Split data into X and y
         X = data.drop(target_column, axis=1)
-        y = data[target_column[0]]  # Assuming a single target column
+        y = data[target_column]
 
         # Train-test split
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-        # Model training
-        st.header("Model Training")
-        with st.spinner("Training the model..."):
-            try:
-                # Attempt to train a classifier model
-                classifier_model = RandomForestClassifier()
-                classifier_model.fit(X_train, y_train)
-                st.success("Classification model training complete!")
+        # Models for classification and regression
+        models = {
+            "RandomForestClassifier": RandomForestClassifier(),
+            "GradientBoostingClassifier": GradientBoostingClassifier(),
+            "LogisticRegression": LogisticRegression(max_iter=200),
+            "SVC": SVC(),
+            "DecisionTreeClassifier": DecisionTreeClassifier(),
+            "KNeighborsClassifier": KNeighborsClassifier(),
+            "GaussianNB": GaussianNB(),
+            "RandomForestRegressor": RandomForestRegressor(),
+            "GradientBoostingRegressor": GradientBoostingRegressor(),
+            "LinearRegression": LinearRegression(),
+            "SVR": SVR(),
+            "DecisionTreeRegressor": DecisionTreeRegressor(),
+            "KNeighborsRegressor": KNeighborsRegressor()
+        }
 
-                # Save the trained model
-                classifier_model_file = "classifier_model.pkl"
-                joblib.dump(classifier_model, classifier_model_file)
-                st.write(f"Classification model saved to {classifier_model_file}")
+        # Results storage
+        results = []
 
-                # Add download button for the trained classification model
-                st.markdown(f"Download the Trained Classification Model: [classifier_model.pkl](./{classifier_model_file})")
-
-                # Model evaluation
-                y_pred_classifier = classifier_model.predict(X_test)
-                accuracy = accuracy_score(y_test, y_pred_classifier)
-                st.write(f"Classification Model Accuracy: {accuracy}")
-
-                # Visualization
-                st.write("Feature Importance (Classification Model):")
-
-                # Visualize histograms for target and dependent variable
-                st.header("Histograms")
-                st.write("Histogram of Target Variable:")
-                plt.figure(figsize=(8, 6))
-                plt.hist(y, bins=30, color='blue', alpha=0.7)
-                st.pyplot()
-
-                st.write(f"Histogram of Dependent Variable ({dependent_column[0]}):")
-                plt.figure(figsize=(8, 6))
-                plt.hist(data[dependent_column[0]], bins=30, color='green', alpha=0.7)
-                st.pyplot()
-
-            except ValueError:
-                # If a classifier model cannot be trained, attempt to train a regression model
-                st.warning("Cannot train a classification model. Attempting to train a regression model...")
+        # Model Training and Evaluation
+        st.header("Model Training and Evaluation")
+        for name, model in models.items():
+            with st.spinner(f"Training {name}..."):
                 try:
-                    # Train a regression model
-                    regression_model = RandomForestRegressor()
-                    regression_model.fit(X_train, y_train)
-                    st.success("Regression model training complete!")
+                    # Classifier
+                    if 'Classifier' in name or isinstance(model, GaussianNB):
+                        model.fit(X_train, y_train)
+                        y_pred = model.predict(X_test)
+                        accuracy = accuracy_score(y_test, y_pred)
+                        results.append({"Model": name, "Metric": "Accuracy", "Score": accuracy})
+                    else:
+                        # Regressor
+                        model.fit(X_train, y_train)
+                        y_pred = model.predict(X_test)
+                        r2 = r2_score(y_test, y_pred)
+                        results.append({"Model": name, "Metric": "R² Score", "Score": r2})
+                except ValueError as e:
+                    st.warning(f"{name} failed: {e}")
+                    continue
+                st.success(f"{name} training and evaluation complete!")
 
-                    # Save the trained model
-                    regression_model_file = "regression_model.pkl"
-                    joblib.dump(regression_model, regression_model_file)
-                    st.write(f"Regression model saved to {regression_model_file}")
-
-                    # Add download button for the trained regression model
-                    st.markdown(f"Download the Trained Regression Model: [regression_model.pkl](./{regression_model_file})")
-
-                    # Model evaluation
-                    y_pred_regression = regression_model.predict(X_test)
-                    r2 = r2_score(y_test, y_pred_regression)
-                    st.write(f"Regression Model R2 Score: {r2}")
-
-                    # Visualization
-                    st.write("Feature Importance (Regression Model):")
-
-                    # Visualize histograms for target and dependent variable
-                    st.header("Histograms")
-                    st.write("Histogram of Target Variable:")
-                    plt.figure(figsize=(8, 6))
-                    plt.hist(y, bins=30, color='blue', alpha=0.7)
+                # Feature Importance (if applicable)
+                if hasattr(model, "feature_importances_"):
+                    st.write(f"Feature Importance for {name}:")
+                    importances = model.feature_importances_
+                    feature_names = X.columns
+                    feat_importances = pd.Series(importances, index=feature_names)
+                    feat_importances.nlargest(10).plot(kind='barh')
                     st.pyplot()
 
-                    st.write(f"Histogram of Dependent Variable ({dependent_column[0]}):")
-                    plt.figure(figsize=(8, 6))
-                    plt.hist(data[dependent_column[0]], bins=30, color='green', alpha=0.7)
-                    st.pyplot()
+        # Display results in a table
+        st.header("Model Performance Summary")
+        results_df = pd.DataFrame(results)
+        st.table(results_df)
 
-                except ValueError:
-                    st.error("Cannot train a regression model. Please select different columns.")
+        # Visualizations for Target and Dependent Variable
+        st.header("Distribution Visualizations")
+        
+        # Box Plot for Target Variable
+        st.write("Box Plot of Target Variable:")
+        plt.figure(figsize=(8, 6))
+        sns.boxplot(y)
+        st.pyplot()
+
+        # Box Plot for Dependent Variable
+        st.write(f"Box Plot of Dependent Variable ({dependent_column}):")
+        plt.figure(figsize=(8, 6))
+        sns.boxplot(data[dependent_column])
+        st.pyplot()
