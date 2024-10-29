@@ -16,9 +16,14 @@ import joblib
 import shap
 # Header Section
 col1, col2, col3 = st.columns(3)
+with col1:
+    st.write('')
 with col2:
     st.subheader('Ensemble Modelling')
-with col2:
+    st.write('Compare the models mixing')
+with col3:
+    st.write('')
+    
     st.image("assets/ensemble.jpeg", width=250)
     st.caption("We visualize, predict, and test")
 
