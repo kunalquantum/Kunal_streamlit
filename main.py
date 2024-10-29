@@ -14,7 +14,7 @@ about_page=st.Page(
 clustering=st.Page(
     #linking of the page 
     page="project1/clustering.py",
-    title="Clutering",
+    title="Clustering",
     icon=":material/thumb_up:",
 
 )
