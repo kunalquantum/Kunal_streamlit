@@ -9,6 +9,16 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 import time
 
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.write('')
+with col2:
+    st.subheader('Multivariate')
+    st.image("assets/multivariate.jpeg", width=250)
+    st.write('Compare the models mixing')
+with col3:
+    st.write('')
+    
 # Set Streamlit page configuration
 
 
