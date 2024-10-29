@@ -20,7 +20,8 @@ with col2:
 with col2:
     st.image("assets/automated.jpeg", width=250)
     st.caption("We visualize, predict, and test")
-
+with col3:
+    st.write('')
 # File upload
 uploaded_file = st.file_uploader("Upload your dataset (CSV file)", type=["csv"])
 
