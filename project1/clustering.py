@@ -9,6 +9,16 @@ from sklearn.decomposition import PCA, FastICA, KernelPCA
 from sklearn.manifold import TSNE
 from sklearn.preprocessing import StandardScaler
 
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.write('')
+with col2:
+    st.subheader('Find the CLusters')
+    st.image("assets/clustering.jpeg", width=250)
+    st.write('Hidden value of data')
+with col3:
+    st.write('')
+    
 # List of explanatory texts
 explanations = [
     "Unsupervised Learning ",
