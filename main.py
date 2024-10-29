@@ -12,8 +12,18 @@ about_page=st.Page(
 
 project1_page=st.Page(
     #linking of the page 
-    page="views/project1.py",
-    title="Project 1",
+    page="views/SmartDataHub.py",
+    title="Home Page",
+    icon=":material/thumb_up:",
+
+
+
+)
+#smart data hub
+predictor=st.Page(
+    #linking of the page 
+    page="project1/predictor.py",
+    title="Predictor",
     icon=":material/thumb_up:",
 
 
@@ -35,7 +45,8 @@ project2_page=st.Page(
 pg=st.navigation(
    {
        "Info":[about_page],
-       "Projects":[project1_page,project2_page],
+       "Smart Data Hub":[project1_page,predictor],
+       
    }
     )
 
