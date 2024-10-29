@@ -1,5 +1,8 @@
 streamlit
 pandas
-matplotlib
+numpy
 scikit-learn
+matplotlib
+seaborn
 joblib
+shap
