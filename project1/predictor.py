@@ -7,9 +7,31 @@ from sklearn.metrics import accuracy_score, r2_score
 from sklearn.preprocessing import LabelEncoder
 import joblib
 
-st.set_page_config(page_title='Autopredictor', page_icon=':infinity:', initial_sidebar_state='collapsed')
-st.title(' :earth_africa: AUTO PREDICTOR ')
-st.caption("We visualize, predict, and test")
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.write(' ')
+
+with col2:
+    st.subheader('Modal Trainer')
+
+with col3:
+    st.write(' ')
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.write(' ')
+
+with col2:
+    st.image("assets/automated.jpeg",width=250)
+  
+    st.caption("We visualize, predict, and test")
+
+with col3:
+    st.write(' ')
+  
+
 
 # File upload
 uploaded_file = st.file_uploader("Upload your dataset (CSV file)", type=["csv"])
