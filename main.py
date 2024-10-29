@@ -84,4 +84,29 @@ st.logo("assets/logo3.png")
 st.sidebar.text("Made with ❤ by Kunal")
 logo_url="assets/logo3.png"
 
+
+import streamlit as st
+
+# Your main app code here
+
+# Footer message
+st.markdown(
+    """
+    <style>
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        font-size: small;
+        color: gray;
+    }
+    </style>
+    <div class="footer">
+        © 2024 Kunal Sharma. All rights reserved.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 pg.run()
