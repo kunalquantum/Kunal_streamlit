@@ -7,6 +7,15 @@ import seaborn as sns
 
 # Set the title and description of your app
 st.title("Advanced Data Cleaning App")
+with col1:
+    st.write('')
+with col2:
+    st.subheader('Ensemble Modelling')
+    st.image("assets/cleaning.jpeg", width=250)
+    st.write('Compare the models mixing')
+with col3:
+    st.write('')
+    
 st.write("Upload a dataset, explore the data, apply advanced data cleaning operations, and download the cleaned data.")
 
 # Section 1: Upload Data
